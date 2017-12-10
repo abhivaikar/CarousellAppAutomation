@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="CarousellAppAutomationSuite">
-  <test name="Test">
-  </test> <!-- Test -->
-</suite> <!-- CarousellAppAutomationSuite -->
+
+<suite name="CarousellAppAutomationSuite" verbose="3">
+	<test name="SellingTests">
+		<classes>
+			<class name="com.carousell.qe.mobile.tests.SellingTests">
+				<methods>
+					<include name="testNewListingAppearsInSearch" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>
