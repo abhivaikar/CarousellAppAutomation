@@ -2,7 +2,20 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="CarousellAppAutomationSuite" verbose="3">
+	
 	<test name="SellingTests">
+	<!-- Test parameters -->
+	<parameter name="appiumServerAddress" value="http://127.0.0.1:4723/wd/hub"/>
+	<parameter name="deviceName" value="device"/>
+	<parameter name="platformName" value="Android"/>
+	<parameter name="app" value="/appbuilds/Carousell-test-engineering-app.apk"/>
+	<parameter name="appPackage" value="com.thecarousell.Carousell"/>
+	<parameter name="appWaitActivity" value="com.thecarousell.*"/>
+	<parameter name="fullReset" value="true"/>
+	<parameter name="newCommandTimeout" value="1200"/>
+	<parameter name="autoGrantPermissions" value="true"/>
+	<parameter name="clearSystemFiles" value="true"/>
+	
 		<classes>
 			<class name="com.carousell.qe.mobile.tests.SellingTests">
 				<methods>
