@@ -5,37 +5,34 @@ import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import com.carousell.qe.mobile.base.BasePage;
 import com.carousell.qe.mobile.enums.SearchResultSort;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 
-public class SearchPage {
-
-	private AppiumDriver<WebElement> driver;
+public class SearchPage extends BasePage {
 	
 	By currentSelectedLocationPopupBy = By.xpath("//android.widget.TextView[@text='OK, Got it!']");
 	By filterBarOptionBy = By.id("com.thecarousell.Carousell:id/bar_filter");
 	By sortByRecentOptionBy = By.id("com.thecarousell.Carousell:id/text_sort_recent");
 	By applyFilterButton = By.id("com.thecarousell.Carousell:id/button_apply_filter");
 	
-	public SearchPage(AppiumDriver<WebElement> driver) {
-		this.driver = driver;
-		
+	public SearchPage() {
+	
 		try {
-			driver.findElement(currentSelectedLocationPopupBy).click();
+		    click(currentSelectedLocationPopupBy);
 		} catch (Exception e) {
 			//Do Nothing
 		}
 	}
 
 	public void sortBy(SearchResultSort sortBy) {
-		driver.findElement(filterBarOptionBy).click();
+		click(filterBarOptionBy);
 		 
 		if(sortBy == SearchResultSort.RECENT)
-		   driver.findElement(sortByRecentOptionBy).click();
+		   click(sortByRecentOptionBy);
 		  
-		driver.findElement(applyFilterButton).click();
+		click(applyFilterButton);
 	}
 
 	public boolean isItemVisibleInSearchResults(String itemTitle) {
@@ -47,12 +44,11 @@ public class SearchPage {
 		do
 		{
 			try {
-				itemToFind = driver.findElement(By.xpath("//android.widget.LinearLayout[@resource-id='com.thecarousell.Carousell:id/view_product']/android.widget.TextView[@text='"+itemTitle+"']"));
-				
+				itemToFind = findElement(By.xpath("//android.widget.LinearLayout[@resource-id='com.thecarousell.Carousell:id/view_product']/android.widget.TextView[@text='"+itemTitle+"']"));
 				found=true;
 			} catch (Exception e) {
-				WebElement itemTileToScrollFrom = driver.findElement(By.xpath("//android.widget.LinearLayout[@resource-id='com.thecarousell.Carousell:id/view_product'][4]"));
-				WebElement itemTileToScrollTo = driver.findElement(By.xpath("//android.widget.LinearLayout[@resource-id='com.thecarousell.Carousell:id/view_product'][2]"));
+				WebElement itemTileToScrollFrom = findElement(By.xpath("//android.widget.LinearLayout[@resource-id='com.thecarousell.Carousell:id/view_product'][4]"));
+				WebElement itemTileToScrollTo = findElement(By.xpath("//android.widget.LinearLayout[@resource-id='com.thecarousell.Carousell:id/view_product'][2]"));
 				new TouchAction(driver).press(itemTileToScrollFrom).waitAction(Duration.ofSeconds(1)).moveTo(itemTileToScrollTo).release().perform();
 				count++;
 		}

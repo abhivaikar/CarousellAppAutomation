@@ -5,9 +5,9 @@ import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import com.carousell.qe.mobile.base.BasePage;
 import com.carousell.qe.mobile.enums.Category;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 
 /**
@@ -15,9 +15,8 @@ import io.appium.java_client.TouchAction;
  * @author Abhijeet
  *
  */
-public class SellingPage {
+public class SellingPage extends BasePage {
 	
-	private AppiumDriver<WebElement> driver;
 	
 	By labelWithDetailsAsTextBy = By.xpath("//android.widget.TextView[@text='Details']");
 	By categoryDropDownBy = By.id("com.thecarousell.Carousell:id/spinner_category");
@@ -27,14 +26,13 @@ public class SellingPage {
 	By submitListingConfirmButtonBy = By.id("com.thecarousell.Carousell:id/action_submit");
 	By listItButtonOnPopupBy = By.xpath("//android.widget.Button[@text='List it!']");
 	
-	public SellingPage(AppiumDriver<WebElement> driver) {
-		this.driver = driver;
-		driver.findElement(labelWithDetailsAsTextBy).click();
+	public SellingPage() {
+		click(labelWithDetailsAsTextBy);
 	}
 
 	public SellingPage setCategory(Category categoryToSelect) {
 	  
-	  driver.findElement(categoryDropDownBy).click();
+	  click(categoryDropDownBy);
 	  boolean found = false;
 	  WebElement categoryToSearch = null;
 		
@@ -42,11 +40,11 @@ public class SellingPage {
 		do
 		{
 			try {
-				categoryToSearch = driver.findElement(By.xpath("//android.widget.CheckedTextView[@text='"+categoryToSelect+"']"));
+				categoryToSearch = findElement(By.xpath("//android.widget.CheckedTextView[@text='"+categoryToSelect+"']"));
 				found=true;
 			} catch (Exception e) {
-				WebElement categoryToSwipeFromInList = driver.findElement(By.xpath("//android.widget.CheckedTextView[6]"));
-				WebElement categoryToSwipeToInList = driver.findElement(By.xpath("//android.widget.CheckedTextView[3]"));
+				WebElement categoryToSwipeFromInList = findElement(By.xpath("//android.widget.CheckedTextView[6]"));
+				WebElement categoryToSwipeToInList = findElement(By.xpath("//android.widget.CheckedTextView[3]"));
 				new TouchAction(driver).press(categoryToSwipeFromInList).waitAction(Duration.ofSeconds(2)).moveTo(categoryToSwipeToInList).release().perform();
 		}
 		}
@@ -62,9 +60,8 @@ public class SellingPage {
 	 */
 	public ItemDetailsInputPage getItemDetailsInputPage() {
 		
-		driver.findElement(viewItemDetailsButtonBy).click();
-		return new ItemDetailsInputPage(driver);
-		
+		findElement(viewItemDetailsButtonBy).click();
+		return new ItemDetailsInputPage();	
 	}
 
 	public SellingPage setPrice(String itemPrice) {
@@ -77,19 +74,19 @@ public class SellingPage {
 		else
 			itemPrice = "0." + itemPrice + "00";
 		
-		driver.findElement(itemPriceBy).sendKeys(itemPrice);
+		type(itemPriceBy,itemPrice);
 		return this;
 	}
 
 
 	public DealDetailsInputPage getDealDetailsInputPage() {
-		driver.findElement(viewDealOptionsButtonBy).click();
-		return new DealDetailsInputPage(driver);
+		click(viewDealOptionsButtonBy);
+		return new DealDetailsInputPage();
 	}
 
 	public void listIt() {
-		driver.findElement(submitListingConfirmButtonBy).click();
-		driver.findElement(listItButtonOnPopupBy).click();
+		click(submitListingConfirmButtonBy);
+		click(listItButtonOnPopupBy);
 	}
 
 }

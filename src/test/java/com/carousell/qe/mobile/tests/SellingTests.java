@@ -23,24 +23,26 @@ public class SellingTests extends BaseTest {
   @Test(description="Test to list an item and verify that it appears in search results based on filters applied")
   public void testNewListingAppearsInSearch() throws Exception {
 
-	  new WelcomePage(driver).beginSignUpOrLoginWithEmail();
-	  new AuthPage(driver).login("abhivaikar","password");	  
-	  new HomePage(driver).startSellingWithPhotoFromCamera();
-	  new CameraPage(driver).capturePhoto();
-	  new CameraPhotoPreviewEditPage(driver).moveForward();
+	  new WelcomePage().beginSignUpOrLoginWithEmail();
+	  new AuthPage().login("abhivaikar","password");	  
+	  new HomePage().startSellingWithPhotoFromCamera();
+	  new CameraPage().capturePhoto();
+	  new CameraPhotoPreviewEditPage().moveForward();
 	  
-	  SellingPage sellingPage = new SellingPage(driver);
+	  SellingPage sellingPage = new SellingPage();
 	  sellingPage.setCategory(Category.EVERYTHING_ELSE);
 	  sellingPage.getItemDetailsInputPage().setItemDetails("Carousell Test Item",ConditionType.NEW,"Brand New, Size: XL, Carousell Test Item").confirm();
 	  sellingPage.setPrice("10.12");
 	  sellingPage.getDealDetailsInputPage().setDealDetails(DealType.MEETUP,"Lets meetup at 5 PM").confirm();
 	  sellingPage.listIt();
+	  grabScreenshot();
 	  
-	  new HomePage(driver).getBrowseTab().scrollAndSelectCategoryTile(Category.EVERYTHING_ELSE);
+	  new HomePage().getBrowseTab().scrollAndSelectCategoryTile(Category.EVERYTHING_ELSE);
 	  
-	  SearchPage searchPage = new SearchPage(driver);
+	  SearchPage searchPage = new SearchPage();
 	  searchPage.sortBy(SearchResultSort.RECENT);
 	  Assert.assertTrue(searchPage.isItemVisibleInSearchResults("Carousell Test Item"),"Item was not found in search results");
+	  grabScreenshot();
 	  Reporter.log("Item is visible in search results",true);
   }
 

@@ -1,23 +1,16 @@
 package com.carousell.qe.mobile.pageobjects;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
-import io.appium.java_client.AppiumDriver;
+import com.carousell.qe.mobile.base.BasePage;
 
-public class WelcomePage {
-
-	private AppiumDriver<WebElement> driver;
+public class WelcomePage extends BasePage {
 	
 	By emailSignInButtonBy = By.id("com.thecarousell.Carousell:id/email_signin_button");
 	
-	public WelcomePage(AppiumDriver<WebElement> driver) {
-		this.driver = driver;
-		
-	}
 
 	public void beginSignUpOrLoginWithEmail() {
-		driver.findElement(emailSignInButtonBy).click();		
+		click(emailSignInButtonBy);		
 	}
 
 }
