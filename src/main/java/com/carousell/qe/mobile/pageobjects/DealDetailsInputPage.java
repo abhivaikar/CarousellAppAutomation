@@ -1,15 +1,12 @@
 package com.carousell.qe.mobile.pageobjects;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
+import com.carousell.qe.mobile.base.BasePage;
 import com.carousell.qe.mobile.enums.DealType;
 
-import io.appium.java_client.AppiumDriver;
+public class DealDetailsInputPage extends BasePage {
 
-public class DealDetailsInputPage {
-
-	private AppiumDriver<WebElement> driver;
 	
 	By submitDetailsButtonBy = By.id("com.thecarousell.Carousell:id/action_submit");
 	By expandOrCollapseMeetupCheckedButtonBy = By.id("com.thecarousell.Carousell:id/option_meetup");
@@ -17,10 +14,6 @@ public class DealDetailsInputPage {
 	By viewLocationsButtonBy = By.id("com.thecarousell.Carousell:id/text_location");
 	By dealLocationListBy = By.xpath("//android.widget.ListView[@resource-id='com.thecarousell.Carousell:id/list_venues']/android.widget.LinearLayout");
 	
-	public DealDetailsInputPage(AppiumDriver<WebElement> driver) {
-		this.driver = driver;
-	}
-
 	public DealDetailsInputPage setDealDetails(DealType dealType, String optionalDetails) {
 		
 		if(dealType == DealType.MEETUP)
@@ -33,17 +26,17 @@ public class DealDetailsInputPage {
 
 	private void setMeetupDetails(String optionalDetails) {
 
-		 if(driver.findElement(expandOrCollapseMeetupCheckedButtonBy).getAttribute("checked").equals("false"))
+		 if(findElement(expandOrCollapseMeetupCheckedButtonBy).getAttribute("checked").equals("false"))
 		  {
-			  driver.findElement(expandOrCollapseMeetupCheckedButtonBy).click();
-			  driver.findElement(viewLocationsButtonBy).click();
-			  driver.findElements(dealLocationListBy).get(0).click();
-			  driver.findElement(meetupDetailsTextBy).sendKeys(optionalDetails);
+			  click(expandOrCollapseMeetupCheckedButtonBy);
+			  click(viewLocationsButtonBy);
+			  findElements(dealLocationListBy).get(0).click();
+			  type(meetupDetailsTextBy,optionalDetails);
 		  }
 	}
 
 	public void confirm() {
-		driver.findElement(submitDetailsButtonBy).click();
+		click(submitDetailsButtonBy);
 	}
 
 }

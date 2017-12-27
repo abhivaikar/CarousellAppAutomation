@@ -3,22 +3,16 @@ package com.carousell.qe.mobile.pageobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import com.carousell.qe.mobile.base.BasePage;
 import com.carousell.qe.mobile.enums.ConditionType;
 
-import io.appium.java_client.AppiumDriver;
-
-public class ItemDetailsInputPage {
-
-	private AppiumDriver<WebElement> driver;
+public class ItemDetailsInputPage extends BasePage {
 	
 	By itemTitleTextBy = By.id("com.thecarousell.Carousell:id/text_title");
 	By viewItemConditionButtonBy = By.id("com.thecarousell.Carousell:id/view_product_condition");
 	By descriptionTextBy = By.id("com.thecarousell.Carousell:id/text_description");
 	By submitDetailsButtonBy = By.id("com.thecarousell.Carousell:id/action_submit");
 	
-	public ItemDetailsInputPage(AppiumDriver<WebElement> driver) {
-		this.driver = driver;
-	}
 
 	public ItemDetailsInputPage setItemDetails(String itemTitleText, ConditionType condition, String descriptionText) {
 	  setItemTitle(itemTitleText);
@@ -29,23 +23,23 @@ public class ItemDetailsInputPage {
 	 }
 
 	public void setDescription(String descriptionText) {
-		WebElement descriptionTextElement = driver.findElement(descriptionTextBy);
+		WebElement descriptionTextElement = findElement(descriptionTextBy);
 		descriptionTextElement.click();
 		descriptionTextElement.sendKeys(descriptionText);
 	}
 
 	public void setCondition(ConditionType condition) {
-		driver.findElement(viewItemConditionButtonBy).click();
-		driver.findElement(By.xpath("//android.widget.CheckedTextView[@text='"+condition+"']")).click();
+		click(viewItemConditionButtonBy);
+		click(By.xpath("//android.widget.CheckedTextView[@text='"+condition+"']"));
 	}
 
 	public void setItemTitle(String itemTitleText) {
-		driver.findElement(itemTitleTextBy).sendKeys(itemTitleText);
+		type(itemTitleTextBy,itemTitleText);
 	}
 	
 	public void confirm()
 	{
-		driver.findElement(submitDetailsButtonBy).click();
+		click(submitDetailsButtonBy);
 	}
 
 }
